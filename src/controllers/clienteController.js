@@ -2,6 +2,7 @@ import { Cliente } from "../models/Cliente.js";
 import clienteRepository from "../repositories/clienteRepository.js";
 import { consultarCep } from "../utils/consultarCep.js";
 import { limparNumero } from "../utils/limparNumero.js";
+import { tratarErroValidacao } from "../utils/tratarErroValidacao.js";
 
 const clienteController = {
     criar: async (req, res) => {
@@ -25,11 +26,11 @@ const clienteController = {
                 data: resultado
             });
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                message: 'Erro ao criar cliente',
-                error: error.message
-            });
+            return tratarErroValidacao(
+                error,
+                res,
+                "Erro ao criar cliente"
+            );
         }
     },
     atualizar: async (req, res) => {
@@ -54,11 +55,11 @@ const clienteController = {
                 data: resultado
             });
         } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                message: 'Erro ao atualizar cliente',
-                error: error.message
-            });
+            return tratarErroValidacao(
+                error,
+                res,
+                "Erro ao criar cliente"
+            );
         }
     },
     deletar: async (req, res) => {

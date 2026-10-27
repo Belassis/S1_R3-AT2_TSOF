@@ -1,5 +1,6 @@
 import { Veiculo } from "../models/Veiculo.js";
 import veiculoRepository from "../repositories/veiculoRepository.js";
+import { tratarErroValidacao } from "../utils/tratarErroValidacao.js";
 
 const veiculoController = {
     criar: async (req, res) => {

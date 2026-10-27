@@ -42,11 +42,33 @@ const clienteRepository = {
         const [rows] = await connection.execute(sql, values);
         return rows;
     },
-    deletar: async (id) => {
-        const sql = 'DELETE FROM clientes WHERE Id = ?;';
-        const [rows] = await connection.execute(sql, [id]);
-        return rows;
+
+    deletar: async (req, res) => {
+        try {
+            const id = Number(req.params.id);
+            const resultado = await clienteRepository.deletar(id);
+
+            // Verifica se algum cliente foi excluído
+            if (resultado.affectedRows === 0) {
+                return res.status(404).json({
+                    message: "Cliente não encontrado",
+                    data: {}
+                });
+            }
+
+            res.status(200).json({
+                message: 'Cliente deletado com sucesso',
+                data: resultado
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                message: 'Erro ao deletar cliente',
+                error: error.message
+            });
+        }
     },
+
     selecionar: async () => {
         const sql = 'SELECT * FROM clientes ORDER BY Nome;';
         const [rows] = await connection.execute(sql);

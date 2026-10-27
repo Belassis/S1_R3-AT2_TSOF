@@ -1,5 +1,6 @@
 import { Montadora } from "../models/Montadora.js";
 import montadoraRepository from "../repositories/montadoraRepository.js";
+import { tratarErroValidacao } from "../utils/tratarErroValidacao.js";
 
 const montadoraController = {
     criar: async (req, res) => {
